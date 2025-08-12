@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Financial Headlines Sentiment Analyzer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #000428, #004e92, #091540);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      overflow: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .problem-statement {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px 30px;
+      max-width: 700px;
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 30px;
+    }
+
+    #problemText {
+      color: #ffffff; /* Explicit white text */
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 15px;
+      padding: 40px 50px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      width: 500px;
+      max-width: 90%;
+      text-align: center;
+      color: #f5f1f1;
+    }
+
+    h1 {
+      margin-bottom: 15px;
+      color: #222;
+    }
+
+    p {
+      color: #444;
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"] {
+      flex: 1 1 60%;
+      padding: 12px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    button {
+      padding: 12px 25px;
+      margin: 5px;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #555;
+      transform: translateY(-2px);
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #222;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    #result.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Problem Statement Section -->
+  <div class="problem-statement">
+    <h2>Problem Statement</h2>
+    <p id="problemText"></p>
+  </div>
+
+  <!-- Analyzer Box -->
+  <div class="container">
+    <h1>Financial Headlines Sentiment Analyzer</h1>
+    <p>
+     "Enter a headline and let us reveal its sentiment!"
+     
+    </p>
+    <div class="input-group">
+      <input type="text" id="headline" placeholder="e.g., Company reports record profit this quarter" />
+      <button onclick="analyzeSentiment()">Analyze</button>
+    </div>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    // Typing effect for Problem Statement
+    const problemText = "This interactive web app instantly analyzes the sentiment of any financial news headline. Understand the tone of news to make better insights!";
+    const problemEl = document.getElementById("problemText");
+    let i = 0;
+
+    function typeProblem() {
+      if (i < problemText.length) {
+        problemEl.innerHTML += problemText.charAt(i);
+        i++;
+        setTimeout(typeProblem, 30);
+      }
+    }
+
+    typeProblem();
+
+    function analyzeSentiment() {
+      const headline = document.getElementById("headline").value.trim();
+      const resultEl = document.getElementById("result");
+
+      if (headline === "") {
+        resultEl.innerHTML = "<span style='color: #d99;'>Please enter a headline.</span>";
+        resultEl.classList.add("visible");
+        return;
+      }
+
+      let sentiment = "Neutral";
+      const lower = headline.toLowerCase();
+
+      if (lower.includes("profit") || lower.includes("gain") || lower.includes("growth") || lower.includes("surge")) {
+        sentiment = "Positive";
+      } else if (lower.includes("loss") || lower.includes("drop") || lower.includes("decline") || lower.includes("fall")) {
+        sentiment = "Negative";
+      }
+
+      resultEl.innerHTML = "<h3>Sentiment: " + sentiment + "</h3>";
+      resultEl.classList.add("visible");
+    }
+  </script>
+
+</body>
+</html>
